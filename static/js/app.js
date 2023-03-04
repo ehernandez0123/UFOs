@@ -5,9 +5,8 @@ const tableData = data;
 // This tells Java to look for the <tbody> tags in the HTML
 var tbody = d3.select("tbody");
 
-// Create a new function to build a table
-function buildTable(data){
-  // Clear any existing data
+// Create a new function to build a table AND Clear any existing data
+function buildTable(data) {
   tbody.html("");
 }
  
@@ -21,27 +20,28 @@ data.forEach((dataRow) => {
   Object.values(dataRow).forEach((val) => {
     let cell = row.append("td");
     cell.text(val);
-  });
+    }
+  );
 });
 
 // Add a click button function
 // Filtering by date
 // Add an if statement
 function handleClick() {
-  let date = d3.select("#datetime").property("value");
+  // Grab the datetime value from the filter
+  let date = d3.select("datetime").property("value");
   let filteredData = tableData;
 
-  if(date) {
+   // Check to see if a date was entered and filter the
+  // data using that date.
+  if (date) {
+    // Apply `filter` to the table data to only keep the
+    // rows where the `datetime` value matches the filter value
     filteredData = filteredData.filter(row => row.datetime === date);
   };
 
-  // Rebuild the table using the filtered date
+   // Rebuild the table using the filtered data
+  // @NOTE: If no date was entered, then filteredData will
+  // just be the original tableData.
   buildTable(filteredData);
-
-}
-
-// Attach an event to listen for the form button
-d3.selectAll("#filter-btn").on("click", handleClick);
-
-// Build the table when the page loads
-buildTable(tableData);
+};
