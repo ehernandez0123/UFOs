@@ -23,3 +23,25 @@ data.forEach((dataRow) => {
     cell.text(val);
   });
 });
+
+// Add a click button function
+// Filtering by date
+// Add an if statement
+function handleClick() {
+  let date = d3.select("#datetime").property("value");
+  let filteredData = tableData;
+
+  if(date) {
+    filteredData = filteredData.filter(row => row.datetime === date);
+  };
+
+  // Rebuild the table using the filtered date
+  buildTable(filteredData);
+
+}
+
+// Attach an event to listen for the form button
+d3.selectAll("#filter-btn").on("click", handleClick);
+
+// Build the table when the page loads
+buildTable(tableData);
